@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Form</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    }
+  </style>
+  <style>
+    table,
+    table td {
+      border: 1px solid #cccccc;
+    }
+    td {
+      height: 20px;
+      width: 260px;
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+  <style>
+    table,
+    table tr {
+      border: 1px solid #cccccc;
+    }
+    tr {
+      height: 20px;
+      width: 260px;
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">sizeit</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <div class="row mt-4">
+    <section class="features-icons bg-light text-center">
+        <div class="container">
+            <h2 class="mt-0">True to size e-commerce in 3 steps...</h2>
+            <div class="row">
+                <div class="col-lg-4 px-2">
+                    <div class="features-icons-item mx-auto mb-0 mb-sm-1">
+                        <div class="features-icons-icon d-flex"><i class="bi bi-camera-fill fs-1 m-auto text-primary"></i></div>
+                        <h3>Upload image</h3>
+                        <p class="lead mb-0">to start virtual measurements!</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 px-2">
+                    <div class="features-icons-item mx-auto mb-0 mb-sm-1">
+                        <div class="features-icons-icon d-flex"><i class="bi bi-rulers fs-1 m-auto text-primary"></i></div>
+                        <h3>Get your size & measurements</h3>
+                        <p class="lead mb-0">Conveniently in a table below</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 px-2">
+                    <div class="features-icons-item mx-auto mb-0 mb-sm-1">
+                        <div class="features-icons-icon d-flex"><i class="bi bi-bag-check-fill fs-1 m-auto text-primary"></i></div>
+                        <h3>Proceed to shop</h3>
+                        <p class="lead mb-0">directly through our integration</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="col-md-6">
+      <div class="card p-4" style="text-align:center">
+        <label for="imageUpload" class="form-label">Upload Your Image</label>
+        <input class="form-control" type="file" id="imageUpload">
+        <div class="mt-4" id="imagePreview">
+          <div id="loader" style="text-align: center; display: none;"></div>
+          <img id="uploadedImage" src="https://via.placeholder.com/400x300" alt="Uploaded Image" class="img-fluid">
+        </div>
+        <button class="btn btn-primary mt-4" id="uploadButton">Upload & Measure</button>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <h4 class="mt-4 "><div style="text-align: center;">Measurement Table</div></h4>
+      <!--Table-->
+        <div class="col-12 p-0">
+              <div class="tables-container">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Your Measurements</th>
+                          <th scope="col">Manufacturer Measurements</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Chest (in)</th>
+                          <td id="chest_measurement">0</td>
+                          <td>0</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Waist (in)</th>
+                          <td id="waist_measurement">0</td>
+                          <td>0</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Hip (in)</th>
+                          <td id="hip_measurement">0</td>
+                          <td>0</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Height (in)</th>
+                          <td id="height_measurement">0</td>
+                          <td>0</td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    const fileInput = document.getElementById("imageUpload");
+    const loader = document.getElementById("loader");
+    const uploadedImage = document.getElementById("uploadedImage");
+    const uploadButton = document.getElementById("uploadButton");
+    
+    // Set the initial state
+    // Hide the loader
+    
+    fileInput.addEventListener("change", function() {
+      uploadedImage.style.display = "none"; // Hide the uploaded image
+      loader.style.display = "block"; // Show the loader
+      
+      // Simulate an image upload process (you should replace this with your actual upload code)
+      setTimeout(function() {
+        const selectedFile = fileInput.files[0];
+        uploadedImage.src = URL.createObjectURL(selectedFile);
+        uploadedImage.style.display = "block"; // Display the uploaded image
+        loader.style.display = "none"; // Hide the loader after image is displayed
+      }, 2000); // Simulated 2-second delay for illustration
+    });
+    
+    uploadButton.addEventListener("click", function () {
+      if (uploadedImage.style.display === "block") {
+        // Show the loader only if the uploaded image is currently displayed
+        loader.style.display = "block";
+        uploadedImage.style.display = "none";
+      }
+    });
+    </script>
+    <script>
+        uploadButton.addEventListener("click", function() {
+            if (fileInput.files.length > 0) {
+                // Get the uploaded image file
+                const imageFile = fileInput.files[0];
+    
+                // Create a FormData object to send the image to the server
+                const formData = new FormData();
+                formData.append("image", imageFile);
+    
+                // Send the image to the Flask server using fetch
+                fetch("/process_image", {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                        // Handle the response from the server (data contains measurement values)
+                        console.log(data);
+    
+                        const [chest, waist, hip, height, size] = data;
+                        // Update the measurement table in your HTML with the received data
+                        // For example, set the "td" elements to the received measurement values
+                        document.getElementById("chest_measurement").textContent = chest;
+                        document.getElementById("waist_measurement").textContent = waist;
+                        document.getElementById("hip_measurement").textContent = hip;
+                        document.getElementById("height_measurement").textContent = height;
+                        document.getElementById("size_measurement").textContent = size;
+                })
+                .catch(error => {
+                        console.error("Error processing image:", error);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
